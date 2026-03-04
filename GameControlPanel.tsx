@@ -6,6 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Pause, Play, RotateCcw } from "lucide-react"
 
+interface Penalty {
+  id: number
+  team: "home" | "away"
+  duration: number
+  timeLeft: number
+}
+
 const formatTime = (seconds: number) => {
   const mins = Math.floor(seconds / 60)
   const secs = seconds % 60
@@ -19,7 +26,7 @@ const GameControlPanel: React.FC = () => {
   const [isShotClockRunning, setIsShotClockRunning] = useState(false)
   const [score, setScore] = useState({ home: 0, away: 0 })
   const [timeouts, setTimeouts] = useState({ home: 4, away: 4 })
-  const [penalties, setPenalties] = useState<any[]>([])
+  const [penalties, setPenalties] = useState<Penalty[]>([])
   const [timeoutTime, setTimeoutTime] = useState(0)
   const [isTimeoutActive, setIsTimeoutActive] = useState(false)
 
@@ -85,9 +92,15 @@ const GameControlPanel: React.FC = () => {
 
       penaltiesInterval = setInterval(() => {
         setPenalties((prev) =>
-          prev
-            .map((penalty) => (penalty.timeLeft > 0 ? { ...penalty, timeLeft: penalty.timeLeft - 1 } : penalty))
-            .filter((penalty) => penalty.timeLeft > 0),
+          prev.reduce((acc, penalty) => {
+            if (penalty.timeLeft > 0) {
+              const newTimeLeft = penalty.timeLeft - 1
+              if (newTimeLeft > 0) {
+                acc.push({ ...penalty, timeLeft: newTimeLeft })
+              }
+            }
+            return acc
+          }, [] as Penalty[]),
         )
       }, 1000)
     }
