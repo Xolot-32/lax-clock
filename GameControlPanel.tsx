@@ -12,6 +12,13 @@ const formatTime = (seconds: number) => {
   return `${mins}:${secs.toString().padStart(2, "0")}`
 }
 
+interface Penalty {
+  id: number
+  team: "home" | "away"
+  duration: number
+  timeLeft: number
+}
+
 const GameControlPanel: React.FC = () => {
   const [gameTime, setGameTime] = useState(480)
   const [shotClock, setShotClock] = useState(30)
@@ -19,7 +26,7 @@ const GameControlPanel: React.FC = () => {
   const [isShotClockRunning, setIsShotClockRunning] = useState(false)
   const [score, setScore] = useState({ home: 0, away: 0 })
   const [timeouts, setTimeouts] = useState({ home: 4, away: 4 })
-  const [penalties, setPenalties] = useState<any[]>([])
+  const [penalties, setPenalties] = useState<Penalty[]>([])
   const [timeoutTime, setTimeoutTime] = useState(0)
   const [isTimeoutActive, setIsTimeoutActive] = useState(false)
 
