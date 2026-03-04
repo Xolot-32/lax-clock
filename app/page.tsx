@@ -1,10 +1,8 @@
-import GameControlPanel from "./components/GameControlPanel"
-
-export default function Home() {
+export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-100">
-      <GameControlPanel />
+    <main>
+      <h1>Bienvenido a Lax Clock</h1>
+      <p>¡Tu proyecto Next.js funciona correctamente!</p>
     </main>
-  )
+  );
 }
-
