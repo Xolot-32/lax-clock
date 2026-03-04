@@ -1,0 +1,1 @@
+// Jest setup file - puede estar vacío
