@@ -1,4 +1,4 @@
-import GameControlPanel from "@/components/GameControlPanel"
+import GameControlPanel from "./components/GameControlPanel"
 
 export default function Home() {
   return (
