@@ -85,9 +85,15 @@ const GameControlPanel: React.FC = () => {
 
       penaltiesInterval = setInterval(() => {
         setPenalties((prev) =>
-          prev
-            .map((penalty) => (penalty.timeLeft > 0 ? { ...penalty, timeLeft: penalty.timeLeft - 1 } : penalty))
-            .filter((penalty) => penalty.timeLeft > 0),
+          prev.reduce((acc, penalty) => {
+            if (penalty.timeLeft > 0) {
+              const newTimeLeft = penalty.timeLeft - 1
+              if (newTimeLeft > 0) {
+                acc.push({ ...penalty, timeLeft: newTimeLeft })
+              }
+            }
+            return acc
+          }, [] as any[]),
         )
       }, 1000)
     }
